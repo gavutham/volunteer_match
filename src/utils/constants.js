@@ -16,3 +16,5 @@ export const USER = {
     "Animal Welfare",
   ],
 };
+
+export const API_BASE_URL = "https://volunteer-match-api.onrender.com";

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Context } from "../../../context/context";
 import { useNavigate } from "react-router-dom";
 import {
@@ -13,34 +13,29 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { USER } from "../../../utils/constants";
+import api from "../../../services/api";
 
 const SignUp = () => {
   const { user, dispatch, isFetching } = useContext(Context);
   const navigate = useNavigate();
 
-  //implement after the testing of login and signup
+  useEffect(() => {
+    if (user !== null) navigate("/");
+  }, [user]);
 
-  // useEffect(() => {
-  //   if (user !== null) navigate("/");
-  // }, [user]);
-
-  const handleSignUp = (values) => {
-    console.log(values);
-
+  const handleSignUp = async (values) => {
     dispatch({ type: "LOGIN_START" });
     try {
-      //get this from form signup submission
+      const user = {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        role: values.role,
+        tags: values.tags,
+      };
 
-      // const res = await api.post("/auth/login", {
-      // 	email: emailRef.current.value,
-      // 	password: passRef.current.value,
-      // });
-
-      const res = { data: { name: "gavutham", email: "kg@gmail.com" } };
-
+      const res = await api.post("/auth/signup", user);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-
-      console.log(user);
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE" });
     }
@@ -103,7 +98,6 @@ const SignUp = () => {
             label="Role"
             placeholder="Select Your Role"
             data={USER.ROLES}
-            onChange={(value) => setRole(value)}
             {...form.getInputProps("role")}
           />
           {form.values.role === "Volunteer" && (
