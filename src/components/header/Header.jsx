@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { Container, Group, Burger } from "@mantine/core";
+import { Container, Group, Burger, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { MantineLogo } from "@mantinex/mantine-logo";
-import classes from "./Header.css";
+import classes from "./Header.module.css";
 
 const links = [
   { link: "/about", label: "Features" },
@@ -11,7 +10,7 @@ const links = [
   { link: "/community", label: "Community" },
 ];
 
-export function HeaderSimple() {
+function Header() {
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
 
@@ -33,13 +32,14 @@ export function HeaderSimple() {
   return (
     <header className={classes.header}>
       <Container size="md" className={classes.inner}>
-        <MantineLogo size={28} />
+        <Text>Volunteer Match</Text>
         <Group gap={5} visibleFrom="xs">
           {items}
         </Group>
-
         <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
       </Container>
     </header>
   );
 }
+
+export default Header;
