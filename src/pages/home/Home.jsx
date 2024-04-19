@@ -15,7 +15,6 @@ const Home = () => {
   return (
     <>
       <Header />
-      i\ho
       <Text fw={500}>Hi {user?.name}</Text>
       {user && (
         <Button onClick={() => dispatch({ type: "LOGOUT" })}>Logout</Button>
