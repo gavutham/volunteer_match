@@ -1,46 +1,106 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../../../context/context";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mantine/core";
+import {
+  Anchor,
+  Button,
+  Flex,
+  PasswordInput,
+  Stack,
+  Text,
+  TextInput,
+} from "@mantine/core";
+import { useForm } from "@mantine/form";
+import api from "../../../services/api";
 
 const Login = () => {
   const { user, dispatch, isFetching } = useContext(Context);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
-  //implement after the testing of login and signup
+  useEffect(() => {
+    if (user !== null) navigate("/");
+  }, [user]);
 
-  // useEffect(() => {
-  //   if (user !== null) navigate("/");
-  // }, [user]);
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-
+  const handleSignUp = async (values) => {
     dispatch({ type: "LOGIN_START" });
     try {
-      //get this from form login submission
+      const cred = {
+        email: values.email,
+        password: values.password,
+      };
 
-      // const res = await api.post("/auth/login", {
-      // 	email: emailRef.current.value,
-      // 	password: passRef.current.value,
-      // });
-
-      const res = { data: { name: "gavutham", email: "kg@gmail.com" } };
-
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-
-      console.log(user);
+      const res = await api.post("/auth/login", cred);
+      if (res.status === 200) {
+        dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+      } else {
+        setError(true);
+        dispatch({ type: "LOGIN_FAILURE" });
+      }
     } catch (err) {
+      setError(true);
       dispatch({ type: "LOGIN_FAILURE" });
     }
   };
+
+  const form = useForm({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validate: {
+      email: (value) =>
+        !value
+          ? "Email is required"
+          : !/\S+@\S+\.\S+/.test(value) && "Invalid email address",
+      password: (value) => !value && "Password is required",
+    },
+  });
+
   return (
-    <div>
-      {/* build the login form here*/}
-      <Button variant="filled" disabled={isFetching} onClick={handleLogin}>
-        login
-      </Button>
-    </div>
+    <Flex align="center" justify="center" h={"100vh"}>
+      <form onSubmit={form.onSubmit((values) => handleSignUp(values))}>
+        <Stack gap="md" w={500} justify="center">
+          <Flex justify="center" gap="xs" align="flex-end">
+            <Text fw={500} size="lg">
+              Login
+            </Text>
+            <Text fw={200} size="sm">
+              into
+            </Text>
+          </Flex>
+          <Text
+            size="xl"
+            fw={700}
+            style={{ textAlign: "center", fontSize: 32 }}
+          >
+            Volunteer Match
+          </Text>
+          <TextInput
+            label="Email"
+            placeholder="Enter your Email"
+            {...form.getInputProps("email")}
+          />
+          <PasswordInput
+            label="Password"
+            placeholder="Enter your Password"
+            {...form.getInputProps("password")}
+          />
+          <Button type="submit" loading={isFetching}>
+            Log Me In
+          </Button>
+          <Flex justify="center" gap="sm">
+            <Text>{"Don't"} have an account?</Text>
+            <Anchor onClick={() => navigate("/signup")}>try Signing Up</Anchor>
+          </Flex>
+          {error && (
+            <Text size="md" c="red" align="center">
+              Some Error Occurred, Please Try Again
+            </Text>
+          )}
+        </Stack>
+      </form>
+    </Flex>
   );
 };
 
