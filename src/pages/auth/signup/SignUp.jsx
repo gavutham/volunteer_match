@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Context } from "../../../context/context";
 import { useNavigate } from "react-router-dom";
 import {
+  Anchor,
   Button,
   Flex,
   MultiSelect,
@@ -120,6 +121,10 @@ const SignUp = () => {
           <Button type="submit" loading={isFetching}>
             Sign Me Up
           </Button>
+          <Flex justify="center" gap="sm">
+            <Text>Existing User?</Text>
+            <Anchor onClick={() => navigate("/login")}>try Logging In</Anchor>
+          </Flex>
           {error && (
             <Text size="md" c="red" align="center">
               Some Error Occurred, Please Try Again
