@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../../../context/context";
 import { useNavigate } from "react-router-dom";
 import {
@@ -17,6 +17,7 @@ import api from "../../../services/api";
 
 const SignUp = () => {
   const { user, dispatch, isFetching } = useContext(Context);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,8 +36,14 @@ const SignUp = () => {
       };
 
       const res = await api.post("/auth/signup", user);
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+      if (res.status === 200) {
+        dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+      } else {
+        setError(true);
+        dispatch({ type: "LOGIN_FAILURE" });
+      }
     } catch (err) {
+      setError(true);
       dispatch({ type: "LOGIN_FAILURE" });
     }
   };
@@ -59,6 +66,8 @@ const SignUp = () => {
       role: (value) => !value && "Role is required",
     },
   });
+
+  console.log(error);
 
   return (
     <Flex align="center" justify="center" h={"100vh"}>
@@ -111,6 +120,11 @@ const SignUp = () => {
           <Button type="submit" loading={isFetching}>
             Sign Me Up
           </Button>
+          {error && (
+            <Text size="md" c="red" align="center">
+              Some Error Occurred, Please Try Again
+            </Text>
+          )}
         </Stack>
       </form>
     </Flex>
