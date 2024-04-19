@@ -7,11 +7,9 @@ const Home = () => {
   const { user, dispatch } = useContext(Context);
   const navigate = useNavigate();
 
-  //implement after the testing of login and signup
-
-  // useEffect(() => {
-  //   if (user === null) navigate("/login");
-  // }, [user]);
+  useEffect(() => {
+    if (user === null) navigate("/login");
+  }, [user]);
 
   return (
     <>
