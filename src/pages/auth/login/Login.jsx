@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { Context } from "../../../context/context";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mantine/core";
 
 const Login = () => {
   const { user, dispatch, isFetching } = useContext(Context);
@@ -36,9 +37,9 @@ const Login = () => {
   return (
     <div>
       {/* build the login form here*/}
-      <button disabled={isFetching} onClick={handleLogin}>
+      <Button variant="filled" disabled={isFetching} onClick={handleLogin}>
         login
-      </button>
+      </Button>
     </div>
   );
 };
