@@ -1,37 +1,58 @@
 .header {
-  height: rem(56px);
+  height: 75px;
   margin-bottom: rem(120px);
-  background-color: var(--mantine-color-body);
-  border-bottom: rem(1px) solid
-    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  background-color: #cfb284 ;
+  border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  position: sticky;
+  z-index: 999;
+  top: -10px;
+  box-shadow: 0 -6px 10px 5px rgba(0,0,0,0.5);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* border: solid 2px;
+  border-color:  black; */
+    font-size: 100px;
 }
 
 .inner {
-  height: rem(56px);
+  height: 75px;
+  width: 100%;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  /* border: solid 2px;
+  border-color:  black; */
+  color: black;
 }
 
 .link {
   display: block;
-  line-height: 1;
-  padding: rem(8px) rem(12px);
+  line-height: 2;
+  padding: 2px 20px;
   border-radius: var(--mantine-radius-sm);
   text-decoration: none;
-  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
+  color: black;
   font-size: var(--mantine-font-size-sm);
   font-weight: 500;
+  border: solid 2px;
+  border-color:  black;
+}
 
-  @mixin hover {
-    background-color: light-dark(
-      var(--mantine-color-gray-0),
-      var(--mantine-color-dark-6)
-    );
+
+.link:hover {
+  background-color: #724804;
+  color: white;
+}
+  
+  
+
+  /* @mixin hover {
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
   }
 
   [data-mantine-color-scheme] &[data-active] {
     background-color: var(--mantine-color-blue-filled);
     color: var(--mantine-color-white);
-  }
-}
+  } */
