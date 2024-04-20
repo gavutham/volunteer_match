@@ -3,6 +3,7 @@ import classes from "./Header.module.css";
 import { useContext } from "react";
 import { Context } from "../../context/context.jsx";
 import { useNavigate } from "react-router-dom";
+import { IconChevronRight } from "@tabler/icons-react";
 
 function Header() {
   const { user, dispatch } = useContext(Context);
@@ -32,22 +33,30 @@ function Header() {
   ));
 
   return (
-    <div>
+    <div className={classes.wrapper}>
       <header className={classes.header}>
         <Box className={classes.inner}>
           <Text size="25px">Volunteer Match</Text>
           <Group gap={5} visibleFrom="xs">
             {items}
             <Group
-              gap="sm"
               className={classes.link}
-              style={{ border: "1px solid #724804", borderRadius: "5px" }}
+              gap={"0px"}
               onClick={() => navigate("/profile")}
             >
-              <Text fw={500} size="sm">
-                {user?.name}
-              </Text>
-              <Avatar src="/user.png" alt={user?.name} radius="xl" size={20} />
+              <Group gap="sm">
+                <Avatar
+                  src="/user.jpg"
+                  alt={user?.name}
+                  radius="xl"
+                  size={32}
+                />
+                <Text fw={500} size="sm">
+                  {user?.name}
+                </Text>
+              </Group>
+
+              <IconChevronRight />
             </Group>
           </Group>
         </Box>
