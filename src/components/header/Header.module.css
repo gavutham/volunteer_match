@@ -1,11 +1,12 @@
 .wrapper {
-  z-index: 999;
+  z-index: 79;
   position: sticky;
   top: 0;
 }
 
 .header {
   height: 75px;
+  width: 100vw;
   margin-bottom: rem(120px);
   background-color: #cfb284;
   border-bottom: rem(1px) solid
