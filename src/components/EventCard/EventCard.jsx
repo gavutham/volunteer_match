@@ -17,7 +17,7 @@ const EventCard = ({ event }) => {
 
   return (
     <>
-      <Card shadow="sm" padding="lg" radius="md" withBorder w={"35%"}>
+      <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Card.Section>
           <Image src="/public/events.png" height={160} alt="event-img" />
         </Card.Section>

@@ -1,17 +1,31 @@
-import { Group, Text, Avatar, Box } from "@mantine/core";
+import {
+  Group,
+  Text,
+  Avatar,
+  Box,
+  Menu,
+  UnstyledButton,
+  rem,
+} from "@mantine/core";
 import classes from "./Header.module.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Context } from "../../context/context.jsx";
 import { useNavigate } from "react-router-dom";
-import { IconChevronRight } from "@tabler/icons-react";
+import {
+  IconChevronDown,
+  IconChevronRight,
+  IconDoorExit,
+  IconUser,
+} from "@tabler/icons-react";
 
 function Header() {
   const { user, dispatch } = useContext(Context);
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const links = [
-    { label: "Logout" },
     { link: "/leaderboard", label: "Leaderboard" },
+    { link: "/requests", label: "Requests" },
   ];
 
   const items = links.map((link) => (
@@ -20,12 +34,7 @@ function Header() {
       className={classes.link}
       onClick={(event) => {
         event.preventDefault();
-
-        if (link.label === "Logout") {
-          dispatch({ type: "LOGOUT" });
-        } else {
-          navigate(link.link);
-        }
+        navigate(link.link);
       }}
     >
       {link.label}
@@ -36,28 +45,80 @@ function Header() {
     <div className={classes.wrapper}>
       <header className={classes.header}>
         <Box className={classes.inner}>
-          <Text size="25px">Volunteer Match</Text>
+          <Text size="25px" color="#e3fef7">
+            Volunteer Match
+          </Text>
           <Group gap={5} visibleFrom="xs">
             {items}
+            <Menu
+              width={150}
+              position="bottom-end"
+              transitionProps={{ transition: "pop-top-right" }}
+              onOpen={() => setMenuOpen(true)}
+              onClose={() => setMenuOpen(false)}
+              withinPortal
+            >
+              <Menu.Target>
+                <UnstyledButton>
+                  <Group gap="sm">
+                    <Avatar
+                      src="/user.jpg"
+                      alt={user?.name}
+                      radius="xl"
+                      size={32}
+                    />
+                    <Text
+                      fw={500}
+                      color="#e3fef7"
+                      size="sm"
+                      style={{
+                        color: "#e3fef7",
+                      }}
+                    >
+                      {user?.name}
+                    </Text>
+                    {!menuOpen && (
+                      <IconChevronRight color="#e3fef7" stroke={1.5} />
+                    )}
+                    {menuOpen && (
+                      <IconChevronDown color="#e3fef7" stroke={1.5} />
+                    )}
+                  </Group>
+                </UnstyledButton>
+              </Menu.Target>
+              <Menu.Dropdown>
+                <Menu.Item
+                  onClick={() => navigate("/profile")}
+                  leftSection={
+                    <IconUser
+                      style={{ width: rem(16), height: rem(16) }}
+                      stroke={1.5}
+                    />
+                  }
+                >
+                  Profile
+                </Menu.Item>
+                <Menu.Divider />
+                <Menu.Item
+                  color="red"
+                  onClick={() => dispatch({ type: "LOGOUT" })}
+                  leftSection={
+                    <IconDoorExit
+                      style={{ width: rem(16), height: rem(16) }}
+                      stroke={1.5}
+                    />
+                  }
+                >
+                  Logout
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+
             <Group
-              className={classes.link}
+              style={{ cursor: "pointer", padding: "2px 20px" }}
               gap={"0px"}
               onClick={() => navigate("/profile")}
-            >
-              <Group gap="sm">
-                <Avatar
-                  src="/user.jpg"
-                  alt={user?.name}
-                  radius="xl"
-                  size={32}
-                />
-                <Text fw={500} size="sm">
-                  {user?.name}
-                </Text>
-              </Group>
-
-              <IconChevronRight />
-            </Group>
+            ></Group>
           </Group>
         </Box>
       </header>

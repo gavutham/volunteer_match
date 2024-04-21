@@ -1,6 +1,9 @@
-import { Flex } from "@mantine/core";
+/* eslint-disable react/prop-types */
+import { Box, SimpleGrid, Text } from "@mantine/core";
 import { USER } from "../../utils/constants";
 import EventCard from "../EventCard/EventCard";
+import { useEffect, useState } from "react";
+import { isSameDay } from "../../utils/functions";
 
 const events = [
   {
@@ -32,13 +35,61 @@ const events = [
   },
 ];
 
-const Events = () => {
+const Events = ({ className, filters }) => {
+  const [filteredEvents, setFilteredEvents] = useState(events);
+
+  const filter = (event) => {
+    if (filters.date === null) {
+      if (filters.title.length === 0 && filters.tags.length === 0) {
+        return true;
+      } else if (filters.tags.length === 0) {
+        return event.title.includes(filters.title);
+      } else if (filters.title.length === 0) {
+        return filters.tags.some((filter) => event.tags.includes(filter));
+      } else {
+        return (
+          event.title.includes(filters.title) &&
+          filters.tags.some((filter) => event.tags.includes(filter))
+        );
+      }
+    } else {
+      if (filters.title.length === 0 && filters.tags.length === 0) {
+        return isSameDay(filters.date, event.time);
+      } else if (filters.tags.length === 0) {
+        return (
+          event.title.includes(filters.title) &&
+          isSameDay(filters.date, event.time)
+        );
+      } else if (filters.title.length === 0) {
+        return (
+          filters.tags.some((filter) => event.tags.includes(filter)) &&
+          isSameDay(filters.date, event.time)
+        );
+      } else {
+        return (
+          event.title.includes(filters.title) &&
+          filters.tags.some((filter) => event.tags.includes(filter)) &&
+          isSameDay(filters.date, event.time)
+        );
+      }
+    }
+  };
+
+  useEffect(() => {
+    setFilteredEvents(events.filter(filter));
+  }, [filters]);
+
   return (
-    <Flex my="lg" gap={"50px"} direction="column" align="center">
-      {events.map((event) => (
-        <EventCard event={event} key={event.title} />
-      ))}
-    </Flex>
+    <Box className={className}>
+      <Text fw={500} fz={"32px"} px="lg" pt="md">
+        Checkout the Events Happening !!
+      </Text>
+      <SimpleGrid cols={2} p="lg" spacing="xl">
+        {filteredEvents.map((event, index) => (
+          <EventCard event={event} key={index} />
+        ))}
+      </SimpleGrid>
+    </Box>
   );
 };
 
