@@ -3,8 +3,9 @@ import Header from "../../components/header/Header";
 import { USER } from "../../utils/constants";
 import Filters from "../../components/Filters/Filters";
 import classes from "./Requests.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Request from "../../components/Request/Request";
+import { eventFilter } from "../../utils/functions";
 
 const requestedOrganizers = [
   {
@@ -53,6 +54,15 @@ const Requests = () => {
     date: null,
   });
 
+  const [filteredRequestedEvents, setFilteredRequestedEvents] =
+    useState(requested);
+
+  useEffect(() => {
+    setFilteredRequestedEvents(
+      requested.filter((event) => eventFilter(filters, event))
+    );
+  }, [filters]);
+
   return (
     <>
       <Header />
@@ -66,7 +76,7 @@ const Requests = () => {
           <Text fw={500} fz={"32px"} mb="lg">
             Requests for Events
           </Text>
-          {requested.map((event, index) => (
+          {filteredRequestedEvents.map((event, index) => (
             <Request
               key={index}
               event={event}
