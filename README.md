@@ -1,8 +1,9 @@
-# React + Vite
+Volunteer Match - A Web platform to connect Event Organizers and Volunteers
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+To run the project - git clone "https://github.com/gavutham/volunteer_match.git" - yarn - yarn dev
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Color Palette
+#003C43 - Darker
+#135D66 - Dark
+#77B0AA - Light
+#E3FEF7 - Lighter
