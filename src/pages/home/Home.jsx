@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/context.jsx";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header.jsx";
@@ -11,6 +11,12 @@ const Home = () => {
   const { user } = useContext(Context);
   const navigate = useNavigate();
 
+  const [filters, setFilters] = useState({
+    title: "",
+    tags: [],
+    date: null,
+  });
+
   useEffect(() => {
     if (user === null) navigate("/login");
   }, [user]);
@@ -19,8 +25,12 @@ const Home = () => {
     <>
       <Header />
       <Flex>
-        <Filters className={classes.homeFilters} />
-        <Events className={classes.homeEvents} />
+        <Filters
+          className={classes.homeFilters}
+          filters={filters}
+          setFilters={setFilters}
+        />
+        <Events filters={filters} className={classes.homeEvents} />
       </Flex>
     </>
   );

@@ -115,7 +115,7 @@ function Header() {
             </Menu>
 
             <Group
-              style={{ cursor: "pointer", padding: "2px 20px;" }}
+              style={{ cursor: "pointer", padding: "2px 20px" }}
               gap={"0px"}
               onClick={() => navigate("/profile")}
             ></Group>
