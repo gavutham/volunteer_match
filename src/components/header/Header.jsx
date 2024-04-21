@@ -24,8 +24,9 @@ function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const links = [
-    { link: "/leaderboard", label: "Leaderboard" },
+    { link: "/", label: "Home" },
     { link: "/requests", label: "Requests" },
+    { link: "/leaderboard", label: "Leaderboard" },
   ];
 
   const items = links.map((link) => (
@@ -45,7 +46,12 @@ function Header() {
     <div className={classes.wrapper}>
       <header className={classes.header}>
         <Box className={classes.inner}>
-          <Text size="25px" color="#e3fef7">
+          <Text
+            size="25px"
+            color="#e3fef7"
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate("/")}
+          >
             Volunteer Match
           </Text>
           <Group gap={5} visibleFrom="xs">

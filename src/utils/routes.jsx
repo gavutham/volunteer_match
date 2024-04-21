@@ -4,6 +4,7 @@ import Login from "../pages/auth/login/Login";
 import SignUp from "../pages/auth/signup/SignUp";
 import Leaderboard from "../pages/Leaderboard/Leaderboard";
 import Profile from "../pages/profile/Profile";
+import Requests from "../pages/requests/Requests";
 
 export const router = createBrowserRouter([
   {
@@ -25,5 +26,9 @@ export const router = createBrowserRouter([
   {
     path: "/profile",
     element: <Profile />,
+  },
+  {
+    path: "/requests",
+    element: <Requests />,
   },
 ]);
