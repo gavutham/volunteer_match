@@ -1,4 +1,4 @@
-import { Flex } from "@mantine/core";
+import { Flex, SimpleGrid } from "@mantine/core";
 import { USER } from "../../utils/constants";
 import EventCard from "../EventCard/EventCard";
 
@@ -32,13 +32,13 @@ const events = [
   },
 ];
 
-const Events = () => {
+const Events = ({ className }) => {
   return (
-    <Flex my="lg" gap={"50px"} direction="column" align="center">
+    <SimpleGrid cols={2} p="lg" spacing="xl" className={className}>
       {events.map((event) => (
         <EventCard event={event} key={event.title} />
       ))}
-    </Flex>
+    </SimpleGrid>
   );
 };
 
