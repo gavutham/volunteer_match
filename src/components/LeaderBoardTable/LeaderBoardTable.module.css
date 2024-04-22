@@ -1,0 +1,16 @@
+.list {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.item {
+  width: 50%;
+  margin: 10px 0;
+}
+
+.wrapper {
+  display: flex;
+  text-align: center;
+}

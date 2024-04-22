@@ -1,0 +1,26 @@
+.imgContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 2;
+  height: calc(100vh - 75px);
+  max-height: calc(100vh - 75px);
+  min-height: calc(100vh - 75px);
+  position: sticky;
+  top: 75px;
+}
+
+.wrapper {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
