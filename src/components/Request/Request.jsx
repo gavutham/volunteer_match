@@ -35,7 +35,7 @@ const Request = ({ event, organizer }) => {
                 organized by
               </Text>
               <Text size="md" fw={400}>
-                {organizer.name}
+                {organizer?.name}
               </Text>
             </Flex>
 
