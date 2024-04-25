@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Box, SimpleGrid, Text } from "@mantine/core";
+import { Box, Loader, SimpleGrid, Text } from "@mantine/core";
 import EventCard from "../EventCard/EventCard";
 import { useEffect, useState } from "react";
 import { eventFilter } from "../../utils/functions";
@@ -8,12 +8,14 @@ import api from "../../services/api";
 const Events = ({ className, filters }) => {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState(events);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     setFilteredEvents(events.filter((event) => eventFilter(filters, event)));
   }, [filters, events]);
 
   useEffect(() => {
+    setLoading(true);
     const getEvents = async () => {
       try {
         var res = await api.get("/event");
@@ -26,6 +28,7 @@ const Events = ({ className, filters }) => {
     };
 
     getEvents();
+    setLoading(false);
   }, []);
 
   return (
@@ -33,11 +36,15 @@ const Events = ({ className, filters }) => {
       <Text fw={500} fz={"32px"} px="lg" pt="md">
         Checkout the Events Happening !!
       </Text>
-      <SimpleGrid cols={2} p="lg" spacing="xl">
-        {filteredEvents.map((event, index) => (
-          <EventCard event={event} key={index} />
-        ))}
-      </SimpleGrid>
+      {isLoading ? (
+        <Loader color="#003C43" type="dots" />
+      ) : (
+        <SimpleGrid cols={2} p="lg" spacing="xl">
+          {filteredEvents.map((event, index) => (
+            <EventCard event={event} key={index} />
+          ))}
+        </SimpleGrid>
+      )}
     </Box>
   );
 };
