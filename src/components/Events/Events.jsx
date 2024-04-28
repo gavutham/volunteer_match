@@ -7,8 +7,10 @@ import api from "../../services/api";
 
 const Events = ({ className, filters }) => {
   const [events, setEvents] = useState([]);
+  const [organizers, setOrganizers] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState(events);
   const [isLoading, setLoading] = useState(false);
+  const [mutateEvent, setMutateEvent] = useState(false);
 
   useEffect(() => {
     setFilteredEvents(events.filter((event) => eventFilter(filters, event)));
@@ -29,7 +31,28 @@ const Events = ({ className, filters }) => {
 
     getEvents();
     setLoading(false);
-  }, []);
+  }, [mutateEvent]);
+
+  useEffect(() => {
+    const orgs = [...new Set(events.map((r) => r.uid))];
+    const getUsers = async () => {
+      try {
+        const usersProm = orgs.map(async (uId) => {
+          const res = await api.get("/user/" + uId);
+          if (res.status === 200) {
+            return res.data;
+          }
+        });
+
+        const users = await Promise.all(usersProm);
+        setOrganizers(users);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getUsers();
+  }, [events]);
 
   return (
     <Box className={className}>
@@ -41,7 +64,12 @@ const Events = ({ className, filters }) => {
       ) : (
         <SimpleGrid cols={2} p="lg" spacing="xl">
           {filteredEvents.map((event, index) => (
-            <EventCard event={event} key={index} />
+            <EventCard
+              event={event}
+              key={index}
+              organizer={organizers.find((org) => org._id === event.uid)}
+              setMutateEvent={setMutateEvent}
+            />
           ))}
         </SimpleGrid>
       )}
