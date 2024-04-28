@@ -13,9 +13,9 @@ import { useContext, useState } from "react";
 import { Context } from "../../context/context";
 import api from "../../services/api";
 
-const EventModal = ({ event, organizer, close, setMutate }) => {
+const EventModal = ({ event, organizer, close, setMutate, type }) => {
   const navigate = useNavigate();
-  const { user } = useContext(Context);
+  const { user, dispatch } = useContext(Context);
   const opted_len = event.opted.length;
   const isOpted = event.opted.some((uid) => uid === user._id);
   const [loading, setLoading] = useState(false);
@@ -26,8 +26,12 @@ const EventModal = ({ event, organizer, close, setMutate }) => {
       const path = `/event/opt?eventId=${event._id}&uId=${user._id}`.toString();
       const res = await api.put(path);
       if (res.status === 200) {
+        if (type === "request") {
+          const userRes = await api.get("/user/" + user._id);
+          if (userRes.status === 200)
+            dispatch({ type: "LOGIN_SUCCESS", payload: userRes.data });
+        } else setMutate(true);
         close();
-        setMutate(true);
       }
     } catch (error) {
       console.log(error);
