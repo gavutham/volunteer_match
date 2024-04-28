@@ -10,6 +10,7 @@ const Events = ({ className, filters }) => {
   const [organizers, setOrganizers] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState(events);
   const [isLoading, setLoading] = useState(false);
+  const [mutateEvent, setMutateEvent] = useState(false);
 
   useEffect(() => {
     setFilteredEvents(events.filter((event) => eventFilter(filters, event)));
@@ -30,7 +31,7 @@ const Events = ({ className, filters }) => {
 
     getEvents();
     setLoading(false);
-  }, []);
+  }, [mutateEvent]);
 
   useEffect(() => {
     const orgs = [...new Set(events.map((r) => r.uid))];
@@ -67,6 +68,7 @@ const Events = ({ className, filters }) => {
               event={event}
               key={index}
               organizer={organizers.find((org) => org._id === event.uid)}
+              setMutateEvent={setMutateEvent}
             />
           ))}
         </SimpleGrid>

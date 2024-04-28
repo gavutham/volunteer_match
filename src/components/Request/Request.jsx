@@ -10,7 +10,7 @@ import { useDisclosure } from "@mantine/hooks";
 import EventModal from "../EventModal/EventModal";
 
 /* eslint-disable react/prop-types */
-const Request = ({ event, organizer }) => {
+const Request = ({ event, organizer, setMutateRequests }) => {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
@@ -87,7 +87,7 @@ const Request = ({ event, organizer }) => {
       </Card>
 
       <Modal opened={opened} onClose={close} title="About Event">
-        <EventModal event={event} />
+        <EventModal event={event} setMutate={setMutateRequests} />
       </Modal>
     </>
   );

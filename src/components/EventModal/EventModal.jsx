@@ -9,10 +9,31 @@ import {
 } from "@tabler/icons-react";
 import classes from "./EventModal.module.css";
 import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Context } from "../../context/context";
+import api from "../../services/api";
 
-const EventModal = ({ event, organizer }) => {
+const EventModal = ({ event, organizer, close, setMutate }) => {
   const navigate = useNavigate();
+  const { user } = useContext(Context);
   const opted_len = event.opted.length;
+  const isOpted = event.opted.some((uid) => uid === user._id);
+  const [loading, setLoading] = useState(false);
+
+  const handleOpting = async () => {
+    setLoading(true);
+    try {
+      const path = `/event/opt?eventId=${event._id}&uId=${user._id}`.toString();
+      const res = await api.put(path);
+      if (res.status === 200) {
+        close();
+        setMutate(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
 
   return (
     <div className={classes.card}>
@@ -93,11 +114,13 @@ const EventModal = ({ event, organizer }) => {
         <Button
           type="submit"
           mt="sm"
-          disabled={opted_len >= event.limit}
+          loading={loading}
+          disabled={opted_len >= event.limit || isOpted}
           color="#003C43"
-          style={{ color: "#E3FEF7" }}
+          style={{ color: isOpted ? "grey" : "#E3FEF7" }}
+          onClick={handleOpting}
         >
-          Opt me
+          {isOpted ? "Already Opted for the event" : "Opt me"}
         </Button>
       </Card>
     </div>

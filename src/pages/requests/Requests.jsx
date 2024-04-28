@@ -12,6 +12,7 @@ const Requests = () => {
   const { user } = useContext(Context);
   const [requests, setRequests] = useState([]);
   const [requestedOrganizers, setRequestedOrganizers] = useState([]);
+  const [mutateRequests, setMutateRequests] = useState(false);
 
   const [filters, setFilters] = useState({
     title: "",
@@ -45,7 +46,7 @@ const Requests = () => {
       }
     };
     getRequests();
-  }, [user]);
+  }, [user, mutateRequests]);
 
   useEffect(() => {
     const orgs = [...new Set(requests.map((r) => r.uid))];
@@ -88,6 +89,7 @@ const Requests = () => {
               organizer={requestedOrganizers.find(
                 (org) => org._id === event.uid
               )}
+              setMutateRequests={setMutateRequests}
             />
           ))}
         </div>
