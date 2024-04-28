@@ -20,7 +20,7 @@ const EventCard = ({ event }) => {
     <>
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Card.Section>
-          <Image src="/public/events.png" height={160} alt="event-img" />
+          <Image src="/events.png" height={160} alt="event-img" />
         </Card.Section>
         <Group justify="space-between" mt="md" mb="xs">
           <Text fw={500} fz={"28px"}>

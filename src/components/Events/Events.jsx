@@ -1,57 +1,50 @@
 /* eslint-disable react/prop-types */
-import { Box, SimpleGrid, Text } from "@mantine/core";
-import { USER } from "../../utils/constants";
+import { Box, Loader, SimpleGrid, Text } from "@mantine/core";
 import EventCard from "../EventCard/EventCard";
 import { useEffect, useState } from "react";
 import { eventFilter } from "../../utils/functions";
-
-const events = [
-  {
-    uid: "",
-    title: "Event title",
-    desc: "Ea mollit quis ea laborum. Excepteur elit aliquip nulla sit enim Lorem fugiat incididunt et esse officia deserunt eiusmod pariatur. Cillum minim enim laborum pariatur non deserunt laborum nisi nostrud est esse. Ipsum ex veniam ut commodo. Sunt est sit magna ex ex aliqua excepteur non. Dolor in laboris veniam magna Lorem laborum ex minim non tempor ipsum aliquip fugiat. Eu sunt irure elit non deserunt ut veniam ut sint ad cillum cillum. Consequat elit elit cupidatat amet duis enim ut Lorem excepteur duis. Duis labore cillum dolore non est do enim reprehenderit.",
-    tags: USER.TAGS.slice(0, 3),
-    time: new Date(2024, 4, 29),
-    limit: 20,
-    opted: [],
-  },
-  {
-    uid: "",
-    title: "Event title",
-    desc: "Ea mollit quis ea laborum. Excepteur elit aliquip nulla sit enim Lorem fugiat incididunt et esse officia deserunt eiusmod pariatur. Cillum minim enim laborum pariatur non deserunt laborum nisi nostrud est esse. Ipsum ex veniam ut commodo. Sunt est sit magna ex ex aliqua excepteur non. Dolor in laboris veniam magna Lorem laborum ex minim non tempor ipsum aliquip fugiat. Eu sunt irure elit non deserunt ut veniam ut sint ad cillum cillum. Consequat elit elit cupidatat amet duis enim ut Lorem excepteur duis. Duis labore cillum dolore non est do enim reprehenderit.",
-    tags: USER.TAGS.slice(3, 5),
-    time: new Date(2024, 4, 29),
-    limit: 20,
-    opted: [],
-  },
-  {
-    uid: "",
-    title: "Event title",
-    desc: "Ea mollit quis ea laborum. Excepteur elit aliquip nulla sit enim Lorem fugiat incididunt et esse officia deserunt eiusmod pariatur. Cillum minim enim laborum pariatur non deserunt laborum nisi nostrud est esse. Ipsum ex veniam ut commodo. Sunt est sit magna ex ex aliqua excepteur non. Dolor in laboris veniam magna Lorem laborum ex minim non tempor ipsum aliquip fugiat. Eu sunt irure elit non deserunt ut veniam ut sint ad cillum cillum. Consequat elit elit cupidatat amet duis enim ut Lorem excepteur duis. Duis labore cillum dolore non est do enim reprehenderit.",
-    tags: USER.TAGS.slice(5, 9),
-    time: new Date(2024, 4, 29),
-    limit: 20,
-    opted: [],
-  },
-];
+import api from "../../services/api";
 
 const Events = ({ className, filters }) => {
+  const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState(events);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     setFilteredEvents(events.filter((event) => eventFilter(filters, event)));
-  }, [filters]);
+  }, [filters, events]);
+
+  useEffect(() => {
+    setLoading(true);
+    const getEvents = async () => {
+      try {
+        var res = await api.get("/event");
+        if (res.status === 200) {
+          setEvents(res.data.map((e) => ({ ...e, time: new Date(e.time) })));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getEvents();
+    setLoading(false);
+  }, []);
 
   return (
     <Box className={className}>
       <Text fw={500} fz={"32px"} px="lg" pt="md">
         Checkout the Events Happening !!
       </Text>
-      <SimpleGrid cols={2} p="lg" spacing="xl">
-        {filteredEvents.map((event, index) => (
-          <EventCard event={event} key={index} />
-        ))}
-      </SimpleGrid>
+      {isLoading ? (
+        <Loader color="#003C43" type="dots" />
+      ) : (
+        <SimpleGrid cols={2} p="lg" spacing="xl">
+          {filteredEvents.map((event, index) => (
+            <EventCard event={event} key={index} />
+          ))}
+        </SimpleGrid>
+      )}
     </Box>
   );
 };
