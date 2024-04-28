@@ -7,6 +7,7 @@ import api from "../../services/api";
 
 const Events = ({ className, filters }) => {
   const [events, setEvents] = useState([]);
+  const [organizers, setOrganizers] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState(events);
   const [isLoading, setLoading] = useState(false);
 
@@ -31,6 +32,27 @@ const Events = ({ className, filters }) => {
     setLoading(false);
   }, []);
 
+  useEffect(() => {
+    const orgs = [...new Set(events.map((r) => r.uid))];
+    const getUsers = async () => {
+      try {
+        const usersProm = orgs.map(async (uId) => {
+          const res = await api.get("/user/" + uId);
+          if (res.status === 200) {
+            return res.data;
+          }
+        });
+
+        const users = await Promise.all(usersProm);
+        setOrganizers(users);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getUsers();
+  }, [events]);
+
   return (
     <Box className={className}>
       <Text fw={500} fz={"32px"} px="lg" pt="md">
@@ -41,7 +63,11 @@ const Events = ({ className, filters }) => {
       ) : (
         <SimpleGrid cols={2} p="lg" spacing="xl">
           {filteredEvents.map((event, index) => (
-            <EventCard event={event} key={index} />
+            <EventCard
+              event={event}
+              key={index}
+              organizer={organizers.find((org) => org._id === event.uid)}
+            />
           ))}
         </SimpleGrid>
       )}
