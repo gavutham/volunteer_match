@@ -8,10 +8,44 @@ import {
 import classes from "./Request.module.css";
 import { useDisclosure } from "@mantine/hooks";
 import EventModal from "../EventModal/EventModal";
+import { useContext, useState } from "react";
+import { Context } from "../../context/context";
+import api from "../../services/api";
 
 /* eslint-disable react/prop-types */
 const Request = ({ event, organizer }) => {
   const [opened, { open, close }] = useDisclosure(false);
+  const [loading, setLoading] = useState(false);
+  const { user, dispatch } = useContext(Context);
+
+  const handleAccept = async () => {
+    setLoading(true);
+    try {
+      const path = `/event/opt?eventId=${event._id}&uId=${user._id}`.toString();
+      const res = await api.put(path);
+      if (res.status === 200) {
+        const userRes = await api.get("/user/" + user._id);
+        if (userRes.status === 200)
+          dispatch({ type: "LOGIN_SUCCESS", payload: userRes.data });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
+
+  const handleReject = () => {
+    console.log("rejected");
+  };
+
+  const handleClickCard = (event) => {
+    const innerText = event.target.innerText;
+    const isButton = innerText === "Accept" || innerText === "Reject";
+
+    if (!isButton) {
+      open();
+    }
+  };
 
   return (
     <>
@@ -22,7 +56,7 @@ const Request = ({ event, organizer }) => {
         withBorder
         mb="lg"
         className={classes.card}
-        onClick={open}
+        onClick={handleClickCard}
       >
         <Flex align="center" justify="space-between">
           <div className={classes.left}>
@@ -35,7 +69,7 @@ const Request = ({ event, organizer }) => {
                 organized by
               </Text>
               <Text size="md" fw={400}>
-                {organizer.name}
+                {organizer?.name}
               </Text>
             </Flex>
 
@@ -67,8 +101,10 @@ const Request = ({ event, organizer }) => {
               rightSection={<IconCheck />}
               color="#135D66"
               fullWidth
+              loading={loading}
               mt="md"
               radius="md"
+              onClick={handleAccept}
             >
               Accept
             </Button>
@@ -77,8 +113,10 @@ const Request = ({ event, organizer }) => {
               color="red"
               fullWidth
               variant="light"
+              loading={loading}
               mt="md"
               radius="md"
+              onClick={handleReject}
             >
               Reject
             </Button>
@@ -86,8 +124,13 @@ const Request = ({ event, organizer }) => {
         </Flex>
       </Card>
 
-      <Modal opened={opened} onClose={close} title="About Event">
-        <EventModal event={event} />
+      <Modal opened={opened} onClose={close} title="About Event" size="lg">
+        <EventModal
+          event={event}
+          close={close}
+          organizer={organizer}
+          type="request"
+        />
       </Modal>
     </>
   );

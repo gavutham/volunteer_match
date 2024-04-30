@@ -13,14 +13,14 @@ import { useDisclosure } from "@mantine/hooks";
 import { IconCalendar } from "@tabler/icons-react";
 import EventModal from "../EventModal/EventModal";
 
-const EventCard = ({ event }) => {
+const EventCard = ({ event, organizer, setMutateEvent }) => {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <>
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Card.Section>
-          <Image src="/public/events.png" height={160} alt="event-img" />
+          <Image src="/events.png" height={160} alt="event-img" />
         </Card.Section>
         <Group justify="space-between" mt="md" mb="xs">
           <Text fw={500} fz={"28px"}>
@@ -48,8 +48,13 @@ const EventCard = ({ event }) => {
         </Button>
       </Card>
 
-      <Modal opened={opened} onClose={close} title="About Event">
-        <EventModal event={event} />
+      <Modal opened={opened} onClose={close} title="About Event" size="lg">
+        <EventModal
+          event={event}
+          organizer={organizer}
+          close={close}
+          setMutate={setMutateEvent}
+        />
       </Modal>
     </>
   );
