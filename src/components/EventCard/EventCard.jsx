@@ -35,7 +35,12 @@ const EventCard = ({ event, organizer, setMutateEvent }) => {
         </Group>
         <Flex gap="sm" my="md" wrap="wrap">
           {event.tags.map((tag) => (
-            <Badge variant="light" key={tag}>
+            <Badge
+              variant="light"
+              color="#E3FEF7"
+              key={tag}
+              style={{ color: "#003C43", outline: "0.5px solid #003C43" }}
+            >
               {tag}
             </Badge>
           ))}
@@ -43,7 +48,14 @@ const EventCard = ({ event, organizer, setMutateEvent }) => {
         <Text size="sm" c="dimmed" lineClamp={3}>
           {event.desc}
         </Text>
-        <Button color="blue" fullWidth mt="md" radius="md" onClick={open}>
+        <Button
+          color="#003C43"
+          fullWidth
+          mt="md"
+          radius="md"
+          onClick={open}
+          style={{ color: "#E3FEF7" }}
+        >
           Know More
         </Button>
       </Card>
