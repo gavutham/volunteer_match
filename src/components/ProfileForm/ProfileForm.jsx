@@ -63,10 +63,16 @@ const ProfileForm = () => {
   return (
     <Flex w={"60%"} align="center" justify="center">
       <form onSubmit={form.onSubmit((values) => handleUpdate(values))}>
-        <Stack gap="md" w={500} justify="center">
-          <Text fw={700} size="lg" style={{ alignSelf: "start", fontSize: 30 }}>
-            User Profile
-          </Text>
+        <Stack gap="md" w={500} justify="baseline">
+          <Flex dir="column" justify="space-between" align="center" mb="sm">
+            <Text fw={700} size="30px">
+              User Profile
+            </Text>
+            <Text fw={500} size="xl">
+              Points: {user.points}
+            </Text>
+          </Flex>
+
           <TextInput
             label="Name"
             placeholder="Enter your Name"

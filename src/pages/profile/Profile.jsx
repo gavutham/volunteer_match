@@ -1,27 +1,8 @@
-import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  Anchor,
-  Button,
-  Flex,
-  MultiSelect,
-  PasswordInput,
-  Select,
-  Stack,
-  Text,
-  TextInput,
-} from "@mantine/core";
-import { useForm } from "@mantine/form";
-import { Context } from "../../context/context";
-import { USER } from "../../utils/constants";
+import { Button, Flex, Stack } from "@mantine/core";
 import ProfileForm from "../../components/ProfileForm/ProfileForm";
 import Header from "../../components/header/Header";
 
 const Profile = () => {
-  const { user, dispatch, isFetching } = useContext(Context);
-  const [error, setError] = useState(false);
-  const navigate = useNavigate();
-
   return (
     <>
       <Header />
