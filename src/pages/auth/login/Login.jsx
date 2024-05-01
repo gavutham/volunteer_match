@@ -61,7 +61,7 @@ const Login = () => {
     <Flex align="center" justify="center" h={"100vh"}>
       <form onSubmit={form.onSubmit((values) => handleSignUp(values))}>
         <Stack gap="md" w={500} justify="center">
-          <Flex justify="center" gap="xs" align="flex-end">
+          <Flex justify="center" gap="xs" align="baseline">
             <Text fw={500} size="lg">
               Login
             </Text>
@@ -86,7 +86,7 @@ const Login = () => {
             placeholder="Enter your Password"
             {...form.getInputProps("password")}
           />
-          <Button type="submit" loading={isFetching}>
+          <Button type="submit" loading={isFetching} color="#135D66">
             Log Me In
           </Button>
           <Flex justify="center" gap="sm">
