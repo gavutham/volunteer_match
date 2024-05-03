@@ -74,7 +74,7 @@ const SignUp = () => {
     <Flex align="center" justify="center" h={"100vh"}>
       <form onSubmit={form.onSubmit((values) => handleSignUp(values))}>
         <Stack gap="md" w={500} justify="center">
-          <Flex justify="center" gap="xs" align="flex-end">
+          <Flex justify="center" gap="xs" align="baseline">
             <Text fw={500} size="lg">
               Sign Up
             </Text>
@@ -118,7 +118,7 @@ const SignUp = () => {
               {...form.getInputProps("tags")}
             />
           )}
-          <Button type="submit" loading={isFetching}>
+          <Button type="submit" loading={isFetching} color="#135D66">
             Sign Me Up
           </Button>
           <Flex justify="center" gap="sm">

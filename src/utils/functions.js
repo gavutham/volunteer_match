@@ -12,12 +12,12 @@ export const eventFilter = (filters, event) => {
     if (filters.title.length === 0 && filters.tags.length === 0) {
       return true;
     } else if (filters.tags.length === 0) {
-      return event.title.includes(filters.title);
+      return event.title.toLowerCase().includes(filters.title.toLowerCase());
     } else if (filters.title.length === 0) {
       return filters.tags.some((filter) => eventTags.includes(filter));
     } else {
       return (
-        event.title.includes(filters.title) &&
+        event.title.toLowerCase().includes(filters.title.toLowerCase()) &&
         filters.tags.some((filter) => eventTags.includes(filter))
       );
     }
@@ -26,7 +26,7 @@ export const eventFilter = (filters, event) => {
       return isSameDay(filters.date, event.time);
     } else if (filters.tags.length === 0) {
       return (
-        event.title.includes(filters.title) &&
+        event.title.toLowerCase().includes(filters.title.toLowerCase()) &&
         isSameDay(filters.date, event.time)
       );
     } else if (filters.title.length === 0) {
@@ -36,7 +36,7 @@ export const eventFilter = (filters, event) => {
       );
     } else {
       return (
-        event.title.includes(filters.title) &&
+        event.title.toLowerCase().includes(filters.title.toLowerCase()) &&
         filters.tags.some((filter) => eventTags.includes(filter)) &&
         isSameDay(filters.date, event.time)
       );
