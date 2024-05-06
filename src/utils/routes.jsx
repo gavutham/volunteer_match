@@ -5,6 +5,7 @@ import SignUp from "../pages/auth/signup/SignUp";
 import Leaderboard from "../pages/Leaderboard/Leaderboard";
 import Profile from "../pages/profile/Profile";
 import Requests from "../pages/requests/Requests";
+import Events from "../pages/events/Events";
 
 export const router = createBrowserRouter([
   {
@@ -34,5 +35,9 @@ export const router = createBrowserRouter([
   {
     path: "/requests",
     element: <Requests />,
+  },
+  {
+    path: "/events",
+    element: <Events />,
   },
 ]);

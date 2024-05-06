@@ -25,6 +25,7 @@ function Header() {
 
   const links = [
     { link: "/", label: "Home" },
+    { link: "/events", label: "Events" },
     { link: "/requests", label: "Requests" },
     { link: "/leaderboard", label: "Leaderboard" },
   ];
