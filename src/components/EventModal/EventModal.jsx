@@ -20,17 +20,19 @@ const EventModal = ({ event, organizer, close, setMutate, type }) => {
   const isOpted = event.opted.some((uid) => uid === user._id);
   const [loading, setLoading] = useState(false);
 
-  const handleOpting = async () => {
+  const handleSubmit = async () => {
     setLoading(true);
     try {
-      const path = `/event/opt?eventId=${event._id}&uId=${user._id}`.toString();
+      const path = `/event/${isOpted ? "unopt" : "opt"}?eventId=${
+        event._id
+      }&uId=${user._id}`.toString();
       const res = await api.put(path);
       if (res.status === 200) {
         if (type === "request") {
           const userRes = await api.get("/user/" + user._id);
           if (userRes.status === 200)
             dispatch({ type: "LOGIN_SUCCESS", payload: userRes.data });
-        } else setMutate(true);
+        } else setMutate((prev) => !prev);
         close();
       }
     } catch (error) {
@@ -115,16 +117,26 @@ const EventModal = ({ event, organizer, close, setMutate, type }) => {
           </Flex>
         </Flex>
 
+        {isOpted && (
+          <Text size="14px" mx="auto" color="#003C43">
+            Already Opted for the event !
+          </Text>
+        )}
+
         <Button
           type="submit"
           mt="sm"
           loading={loading}
-          disabled={opted_len >= event.limit || isOpted}
-          color="#003C43"
-          style={{ color: isOpted ? "grey" : "#E3FEF7" }}
-          onClick={handleOpting}
+          disabled={opted_len >= event.limit}
+          color={isOpted ? "red" : "#003C43"}
+          style={{ color: isOpted ? "white" : "#E3FEF7" }}
+          onClick={handleSubmit}
         >
-          {isOpted ? "Already Opted for the event" : "Opt me"}
+          {!isOpted && opted_len >= event.limit && (
+            <Text>Already Opted for the event</Text>
+          )}
+
+          {isOpted ? "Un-opt me from the event" : "Opt me for the event"}
         </Button>
       </Card>
     </div>
