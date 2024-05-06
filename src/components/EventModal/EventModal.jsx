@@ -13,7 +13,7 @@ import { useContext, useState } from "react";
 import { Context } from "../../context/context";
 import api from "../../services/api";
 
-const EventModal = ({ event, organizer, close, setMutate, type }) => {
+const EventModal = ({ event, organizer, close, setMutate }) => {
   const navigate = useNavigate();
   const { user, dispatch } = useContext(Context);
   const opted_len = event.opted.length;
@@ -28,11 +28,10 @@ const EventModal = ({ event, organizer, close, setMutate, type }) => {
       }&uId=${user._id}`.toString();
       const res = await api.put(path);
       if (res.status === 200) {
-        if (type === "request") {
-          const userRes = await api.get("/user/" + user._id);
-          if (userRes.status === 200)
-            dispatch({ type: "LOGIN_SUCCESS", payload: userRes.data });
-        } else setMutate((prev) => !prev);
+        const userRes = await api.get("/user/" + user._id);
+        if (userRes.status === 200)
+          dispatch({ type: "LOGIN_SUCCESS", payload: userRes.data });
+        setMutate((prev) => !prev);
         close();
       }
     } catch (error) {
