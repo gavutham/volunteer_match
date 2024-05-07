@@ -12,9 +12,16 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { IconCalendar } from "@tabler/icons-react";
 import EventModal from "../EventModal/EventModal";
+import { useContext } from "react";
+import { Context } from "../../context/context";
+import { useNavigate } from "react-router-dom";
 
 const EventCard = ({ event, organizer, setMutateEvent }) => {
   const [opened, { open, close }] = useDisclosure(false);
+  const { user } = useContext(Context);
+  const navigate = useNavigate();
+
+  const isVol = user?.role === "Volunteer";
 
   return (
     <>
@@ -53,21 +60,23 @@ const EventCard = ({ event, organizer, setMutateEvent }) => {
           fullWidth
           mt="md"
           radius="md"
-          onClick={open}
+          onClick={isVol ? open : () => navigate(`/event/edit/${event._id}`)}
           style={{ color: "#E3FEF7" }}
         >
-          Know More
+          {isVol ? "Know More" : "Edit Event"}
         </Button>
       </Card>
 
-      <Modal opened={opened} onClose={close} title="About Event" size="lg">
-        <EventModal
-          event={event}
-          organizer={organizer}
-          close={close}
-          setMutate={setMutateEvent}
-        />
-      </Modal>
+      {isVol && (
+        <Modal opened={opened} onClose={close} title="About Event" size="lg">
+          <EventModal
+            event={event}
+            organizer={organizer}
+            close={close}
+            setMutate={setMutateEvent}
+          />
+        </Modal>
+      )}
     </>
   );
 };
