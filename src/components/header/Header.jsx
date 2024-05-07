@@ -23,12 +23,21 @@ function Header() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const links = [
-    { link: "/", label: "Home" },
-    { link: "/events", label: "Events" },
-    { link: "/requests", label: "Requests" },
-    { link: "/leaderboard", label: "Leaderboard" },
-  ];
+  var links;
+
+  if (user?.role === "Volunteer") {
+    links = [
+      { link: "/", label: "Home" },
+      { link: "/events", label: "Events" },
+      { link: "/requests", label: "Requests" },
+      { link: "/leaderboard", label: "Leaderboard" },
+    ];
+  } else if (user?.role === "Organizer") {
+    links = [
+      { link: "/", label: "Home" },
+      { link: "/events", label: "Events" },
+    ];
+  }
 
   const items = links.map((link) => (
     <a
