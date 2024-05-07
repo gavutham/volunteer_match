@@ -22,7 +22,6 @@ const EventsList = ({ className, filters }) => {
     setLoading(true);
     const getEvents = async () => {
       try {
-        console.log(user);
         const eventsProm = user.events.map(async (id) => {
           const res = await api.get("/event/" + id);
           if (res.status === 200) {
