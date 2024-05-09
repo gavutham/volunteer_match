@@ -4,7 +4,6 @@ import {
   Button,
   Flex,
   MultiSelect,
-  Notification,
   NumberInput,
   Text,
   TextInput,

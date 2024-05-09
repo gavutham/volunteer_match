@@ -16,6 +16,7 @@ const ProfileForm = () => {
   const { user, dispatch, isFetching } = useContext(Context);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const isVolunteer = user?.role === "Volunteer";
 
   const handleUpdate = async (values) => {
     setError(false);
@@ -68,9 +69,11 @@ const ProfileForm = () => {
             <Text fw={700} size="30px">
               User Profile
             </Text>
-            <Text fw={500} size="xl">
-              Points: {user.points}
-            </Text>
+            {isVolunteer && (
+              <Text fw={500} size="xl">
+                Points: {user.points}
+              </Text>
+            )}
           </Flex>
 
           <TextInput
