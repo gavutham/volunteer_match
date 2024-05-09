@@ -39,7 +39,7 @@ function Header() {
     ];
   }
 
-  const items = links.map((link) => (
+  const items = links?.map((link) => (
     <a
       key={link.label}
       className={classes.link}

@@ -3,7 +3,7 @@ import { Context } from "../../context/context.jsx";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header.jsx";
 import Events from "../../components/Events/Events.jsx";
-import { Box, Button, Container, Flex, Text } from "@mantine/core";
+import { Box, Button, Flex, Text } from "@mantine/core";
 import Filters from "../../components/Filters/Filters.jsx";
 import classes from "./Home.module.css";
 
@@ -33,7 +33,7 @@ const Home = () => {
         {user?.role === "Volunteer" && (
           <Box className={classes.homeEvents} m="xl">
             <Text fw="bolder" fz={"32px"} my="lg">
-              Discover What's On
+              Discover {"What's"} On
             </Text>
             <Text fw="lighter" fz={"26px"}>
               Uncover the pulse of upcoming events!{" "}
@@ -54,7 +54,7 @@ const Home = () => {
               my="xl"
               variant="outline"
               color="#003C43"
-              onClick={() => ""}
+              onClick={() => navigate("/events/create")}
             >
               Click to Create
             </Button>

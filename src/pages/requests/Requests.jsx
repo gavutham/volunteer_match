@@ -71,7 +71,7 @@ const Requests = () => {
   return (
     <>
       <Header />
-      <Flex className={classes.requests} gap="md">
+      <Flex className={classes.requests}>
         <Filters
           className={classes.requestsFilters}
           filters={filters}
