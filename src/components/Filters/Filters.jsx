@@ -26,7 +26,7 @@ const Filters = ({ className, filters, setFilters }) => {
     }
   };
   return (
-    <Box className={className} px="sm" py="md">
+    <Box className={className} p="xl">
       <Text fw={400} fz="28px" mb="sm">
         Filters
       </Text>

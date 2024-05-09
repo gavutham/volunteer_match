@@ -7,6 +7,7 @@ import Profile from "../pages/profile/Profile";
 import Requests from "../pages/requests/Requests";
 import Events from "../pages/events/Events";
 import CreateEvent from "../pages/create event/CreateEvent";
+import EditEvent from "../pages/editEvent/EditEvent";
 
 export const router = createBrowserRouter([
   {
@@ -44,5 +45,9 @@ export const router = createBrowserRouter([
   {
     path: "/events/create",
     element: <CreateEvent />,
+  },
+  {
+    path: "/event/edit/:id",
+    element: <EditEvent />,
   },
 ]);
