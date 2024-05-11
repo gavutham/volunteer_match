@@ -1,8 +1,11 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Box,
   Button,
+  Checkbox,
   Flex,
+  List,
+  ListItem,
   MultiSelect,
   NumberInput,
   Text,
@@ -15,15 +18,24 @@ import { USER } from "../../utils/constants";
 import api from "../../services/api";
 import { DateTimePicker } from "@mantine/dates";
 import classes from "./EventForm.module.css";
+import { IconUser } from "@tabler/icons-react";
 
 const EventForm = () => {
   const { user, dispatch, isFetching } = useContext(Context);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [tags, setTags] = useState([]);
+  const [users, setUsers] = useState([]);
 
   const handleUpdate = async (values) => {
     setError(false);
     setLoading(true);
+
+    const selected = [];
+    users.forEach((userr) => {
+      const ele = document.getElementsByName(userr._id);
+      if (ele[0].checked) selected.push(userr._id);
+    });
 
     try {
       const eventData = {
@@ -31,6 +43,7 @@ const EventForm = () => {
         uid: user._id,
         time: values.time.valueOf(),
         opted: [],
+        requests: selected,
       };
 
       const res = await api.post("/event", eventData);
@@ -72,6 +85,34 @@ const EventForm = () => {
       points: (value) => (value === 0 || value > 20) && "Enter a valid points",
     },
   });
+
+  useEffect(() => {
+    const formTags = form.values.tags;
+
+    const isNotChanged =
+      formTags.every((value) => tags.includes(value)) &&
+      tags.every((value) => formTags.includes(value));
+
+    if (!isNotChanged) {
+      setTags(formTags);
+    }
+  }, [form]);
+
+  useEffect(() => {
+    const getSuggestions = async () => {
+      try {
+        const body = { tags };
+        const response = await api.post("/event/leaderboard/suggestion", body);
+        if (response.status === 200) {
+          setUsers(response.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getSuggestions();
+  }, [tags]);
 
   return (
     <form onSubmit={form.onSubmit((values) => handleUpdate(values))}>
@@ -132,6 +173,26 @@ const EventForm = () => {
           placeholder="Enter the points for volunteers"
           {...form.getInputProps("points")}
         />
+        {users.length !== 0 && (
+          <Box w={"80%"}>
+            <Text>Suggested Volunteers</Text>
+            <List id="attendance" icon={<IconUser />}>
+              {users.map((userr) => (
+                <ListItem key={userr._id} p="md">
+                  <Checkbox
+                    name={userr._id}
+                    labelPosition="left"
+                    color="#003C43"
+                    label={userr.name}
+                    size="xl"
+                    value={true}
+                    w={"100%"}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        )}
         <Button
           w={"40%"}
           type="submit"
