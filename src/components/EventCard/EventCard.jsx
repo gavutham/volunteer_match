@@ -60,10 +60,20 @@ const EventCard = ({ event, organizer, setMutateEvent }) => {
           fullWidth
           mt="md"
           radius="md"
-          onClick={isVol ? open : () => navigate(`/event/edit/${event._id}`)}
+          onClick={
+            isVol
+              ? open
+              : event.time < Date.now()
+              ? () => navigate(`/event/complete/${event._id}`)
+              : () => navigate(`/event/edit/${event._id}`)
+          }
           style={{ color: "#E3FEF7" }}
         >
-          {isVol ? "Know More" : "Edit Event"}
+          {isVol
+            ? "Know More"
+            : event.time < Date.now()
+            ? "Complete Event"
+            : "Edit Event"}
         </Button>
       </Card>
 
