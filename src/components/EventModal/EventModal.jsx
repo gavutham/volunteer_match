@@ -45,7 +45,7 @@ const EventModal = ({ event, organizer, close, setMutate }) => {
     <div className={classes.card}>
       <Card padding="lg" radius="md" w={"100%"}>
         <Card.Section>
-          <Image src="/public/events.png" height={160} alt="event-img" />
+          <Image src="/events.png" height={160} alt="event-img" />
         </Card.Section>
 
         <Flex my="md" gap="sm" align="baseline">
