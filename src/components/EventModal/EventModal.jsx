@@ -23,10 +23,11 @@ const EventModal = ({ event, organizer, close, setMutate }) => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const path = `/event/${isOpted ? "unopt" : "opt"}?eventId=${
-        event._id
-      }&uId=${user._id}`.toString();
-      const res = await api.put(path);
+      var path = `/event/${isOpted ? "unopt" : "opt"}`;
+      path += `?eventId=${event._id}&uId=${user._id}`;
+
+      console.log(path);
+      const res = await api.put(path.toString());
       if (res.status === 200) {
         const userRes = await api.get("/user/" + user._id);
         if (userRes.status === 200)

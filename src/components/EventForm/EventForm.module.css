@@ -1,0 +1,13 @@
+.input {
+  width: 40%;
+}
+
+.profileTile {
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+}
+
+.profileTile:hover {
+  text-decoration: underline;
+}

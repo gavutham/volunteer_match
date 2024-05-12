@@ -8,6 +8,8 @@ import Requests from "../pages/requests/Requests";
 import Events from "../pages/events/Events";
 import CreateEvent from "../pages/create event/CreateEvent";
 import ViewProfile from "../pages/profile/ViewProfile";
+import EditEvent from "../pages/editEvent/EditEvent";
+import CompleteEvent from "../pages/completeEvent/CompleteEvent";
 
 export const router = createBrowserRouter([
   {
@@ -45,5 +47,13 @@ export const router = createBrowserRouter([
   {
     path: "/events/create",
     element: <CreateEvent />,
+  },
+  {
+    path: "/event/edit/:id",
+    element: <EditEvent />,
+  },
+  {
+    path: "/event/complete/:id",
+    element: <CompleteEvent />,
   },
 ]);

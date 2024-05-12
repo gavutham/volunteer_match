@@ -19,7 +19,7 @@ const Profile = () => {
               }}
             >
               <img
-                src="../../../public/user.jpg"
+                src="/user.jpg"
                 alt="Current user's profile picture"
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />

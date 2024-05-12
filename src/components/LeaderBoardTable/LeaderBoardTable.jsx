@@ -8,7 +8,7 @@ const LeaderBoardTable = ({ list }) => {
       {list.map((l, i) => (
         <Card shadow="sm" withBorder className={classes.item} key={i}>
           <div className={classes.wrapper}>
-            <Text style={{ flex: 1 }}>{i === 5 ? l.position : i + 1}</Text>
+            <Text style={{ flex: 1 }}>{i + 1}</Text>
             <Text style={{ flex: 999 }}>
               {l.name} {`(${l.points} points)`}
             </Text>
