@@ -71,7 +71,9 @@ const EventCard = ({ event, organizer, setMutateEvent }) => {
           style={{ color: event.completed ? "black" : "#E3FEF7" }}
         >
           {isVol
-            ? "Know More"
+            ? event.completed
+              ? "Event Completed"
+              : "Know More"
             : event.time < Date.now()
             ? event.completed
               ? "Event completed"
