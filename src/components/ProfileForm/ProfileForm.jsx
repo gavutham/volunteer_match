@@ -60,7 +60,7 @@ const ProfileForm = () => {
       password: (value) => !value && "Enter a valid password",
     },
   });
-
+console.log(user)
   return (
     <Flex w={"60%"} align="center" justify="center">
       <form onSubmit={form.onSubmit((values) => handleUpdate(values))}>

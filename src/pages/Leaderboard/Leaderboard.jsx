@@ -5,34 +5,6 @@ import LeaderBoardTable from "../../components/LeaderBoardTable/LeaderBoardTable
 import { useEffect, useState } from "react";
 import api from "../../services/api";
 
-const alltime = [
-  {
-    name: "User 1",
-    points: 50,
-  },
-  {
-    name: "User 1",
-    points: 50,
-  },
-  {
-    name: "User 1",
-    points: 50,
-  },
-  {
-    name: "User 1",
-    points: 50,
-  },
-  {
-    name: "User 1",
-    points: 50,
-  },
-  {
-    name: "User 1",
-    points: 50,
-    position: 32,
-  },
-];
-
 const Leaderboard = () => {
   const [leaderboard, setLeaderboard] = useState([]);
 

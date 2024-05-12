@@ -10,7 +10,7 @@ import classes from "./Home.module.css";
 const Home = () => {
   const { user } = useContext(Context);
   const navigate = useNavigate();
-
+  console.log(user);
   const [filters, setFilters] = useState({
     title: "",
     tags: [],

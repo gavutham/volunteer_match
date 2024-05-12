@@ -19,7 +19,6 @@ import api from "../../services/api";
 import { DateTimePicker } from "@mantine/dates";
 import classes from "./EventForm.module.css";
 import { IconUser } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
 
 const EventForm = () => {
   const { user, dispatch, isFetching } = useContext(Context);
@@ -27,7 +26,6 @@ const EventForm = () => {
   const [loading, setLoading] = useState(false);
   const [tags, setTags] = useState([]);
   const [users, setUsers] = useState([]);
-  const navigate = useNavigate();
 
   const handleUpdate = async (values) => {
     setError(false);

@@ -7,6 +7,7 @@ import Profile from "../pages/profile/Profile";
 import Requests from "../pages/requests/Requests";
 import Events from "../pages/events/Events";
 import CreateEvent from "../pages/create event/CreateEvent";
+import ViewProfile from "../pages/profile/ViewProfile";
 import EditEvent from "../pages/editEvent/EditEvent";
 import CompleteEvent from "../pages/completeEvent/CompleteEvent";
 
@@ -33,7 +34,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/profile/:id",
-    element: <Profile />,
+    element: <ViewProfile />,
   },
   {
     path: "/requests",
