@@ -35,6 +35,7 @@ const Filters = ({ className, filters, setFilters }) => {
         <MultiSelect
           placeholder="Search by Tags"
           data={USER.TAGS}
+          value={filters.tags}
           onChange={(value) => handleChange("tags", value)}
         />
       </Flex>
