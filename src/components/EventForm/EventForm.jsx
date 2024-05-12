@@ -19,6 +19,7 @@ import api from "../../services/api";
 import { DateTimePicker } from "@mantine/dates";
 import classes from "./EventForm.module.css";
 import { IconUser } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
 
 const EventForm = () => {
   const { user, dispatch, isFetching } = useContext(Context);
@@ -26,6 +27,7 @@ const EventForm = () => {
   const [loading, setLoading] = useState(false);
   const [tags, setTags] = useState([]);
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
 
   const handleUpdate = async (values) => {
     setError(false);
@@ -183,7 +185,24 @@ const EventForm = () => {
                     name={userr._id}
                     labelPosition="left"
                     color="#003C43"
-                    label={userr.name}
+                    label={
+                      <Text
+                        size="xl"
+                        onClick={() =>
+                          window.open(
+                            `/profile/${userr._id}`,
+                            "_blank",
+                            "rel=noopener noreferrer"
+                          )
+                        }
+                        className={classes.profileTile}
+                      >
+                        {userr.name}
+                        <Text ml="sm" color="grey">
+                          ({userr.points} points)
+                        </Text>
+                      </Text>
+                    }
                     size="xl"
                     value={true}
                     w={"100%"}
@@ -195,6 +214,7 @@ const EventForm = () => {
         )}
         <Button
           w={"40%"}
+          mb="xl"
           type="submit"
           loading={isFetching || loading}
           color="#135D66"
